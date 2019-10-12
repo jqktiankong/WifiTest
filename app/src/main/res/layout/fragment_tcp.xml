@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable name="view" type="com.jqk.wifitest.TCPFragment"/>
+    </data>
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".MainActivity">
+
+        <Switch
+                android:id="@+id/switch_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="0dp"
+                          android:layout_weight="1">
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="10sp"
+                          android:text="我的设备名称："/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/name"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="0dp"
+                          android:layout_weight="1">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="我的设备状态："
+                          android:textSize="10sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:id="@+id/status"
+                />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="10sp"
+                          android:text="选中设备名称："/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/select_name"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="选中设备状态："
+                        android:textSize="10sp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/select_status"
+                />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <Button
+                    android:id="@+id/discover"
+                    android:layout_width="wrap_content"
+                    android:onClick="@{view::discover}"
+                    android:text="发现"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/connect"
+                    android:layout_width="wrap_content"
+                    android:onClick="@{view::connect}"
+                    android:text="连接"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/disconnect"
+                    android:layout_width="wrap_content"
+                    android:onClick="@{view::disconnect}"
+                    android:text="断开连接"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:id="@+id/send"
+                    android:layout_width="wrap_content"
+                    android:onClick="@{view::send}"
+                    android:text="发送消息"
+                    android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/createGroup"
+                    android:onClick="@{view::createGroup}"
+                    android:layout_width="wrap_content"
+                    android:text="创建分组"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/recyclerview"
+                android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+</layout>
