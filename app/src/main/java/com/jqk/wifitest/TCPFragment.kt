@@ -185,6 +185,7 @@ class TCPFragment : Fragment() {
         super.onPause()
         context?.unregisterReceiver(broadcastReceiver)
         EventBus.getDefault().unregister(this)
+        TCPManager.getInstance().closeAll()
     }
 
     override fun onDestroy() {
