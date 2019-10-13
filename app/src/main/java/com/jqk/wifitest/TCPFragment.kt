@@ -85,9 +85,8 @@ class TCPFragment : Fragment() {
                         manager.requestConnectionInfo(mChannel, object : WifiP2pManager.ConnectionInfoListener {
                             override fun onConnectionInfoAvailable(info: WifiP2pInfo) {
                                 // 建立连接
-                                L.d("建立连接 ")
-
                                 TCPManager.getInstance().closeAll()
+                                L.d("建立连接 ")
 
                                 if (info.groupFormed && info.isGroupOwner) {
 
@@ -101,6 +100,17 @@ class TCPFragment : Fragment() {
                                 } else {
                                     TCPManager.getInstance().openServer(info.groupOwnerAddress.hostAddress, AppConstants.SOCKET_SERVER_PORT)
                                 }
+
+//                                val intent = Intent()
+//                                intent.setClass(context!!, WifiService().javaClass)
+//                                if (isClient) {
+//                                    intent.putExtra("type", "client")
+//                                } else {
+//                                    intent.putExtra("type", "server")
+//                                }
+//
+//                                intent.putExtra("info", info)
+//                                context?.startService(intent)
 
                                 wifiP2pInfo = info
                             }
@@ -179,13 +189,21 @@ class TCPFragment : Fragment() {
         context?.registerReceiver(broadcastReceiver, intentFilter)
 
         EventBus.getDefault().register(this)
+
+        if (isClient) {
+            TCPManager.getInstance().openClient(wifiP2pInfo?.groupOwnerAddress?.hostAddress, AppConstants.SOCKET_SERVER_PORT)
+        } else {
+            TCPManager.getInstance().openServer(wifiP2pInfo?.groupOwnerAddress?.hostAddress, AppConstants.SOCKET_SERVER_PORT)
+        }
     }
 
     override fun onPause() {
         super.onPause()
         context?.unregisterReceiver(broadcastReceiver)
         EventBus.getDefault().unregister(this)
+
         TCPManager.getInstance().closeAll()
+
     }
 
     override fun onDestroy() {
@@ -193,6 +211,7 @@ class TCPFragment : Fragment() {
 
         lock.release()
         TCPManager.getInstance().closeAll()
+        disconnect(null)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -265,7 +284,7 @@ class TCPFragment : Fragment() {
         }
     }
 
-    fun disconnect(view: View) {
+    fun disconnect(view: View?) {
         manager.removeGroup(mChannel, object : WifiP2pManager.ActionListener {
 
             override fun onFailure(reasonCode: Int) {

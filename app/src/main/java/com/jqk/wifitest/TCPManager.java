@@ -1,6 +1,10 @@
 package com.jqk.wifitest;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.provider.Settings;
+import android.util.Log;
 import com.example.udptest.udp.ByteUtil;
 import org.greenrobot.eventbus.EventBus;
 
@@ -56,7 +60,7 @@ public class TCPManager {
      * @param port      端口
      */
     public void openServer(final String ipAddress, final int port) {
-
+        L.d("打开服务端");
         if (serverSocket != null) {
             L.d("服务端已存在");
             return;
@@ -83,6 +87,7 @@ public class TCPManager {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    L.d("服务端 = " + e.toString());
                 }
             }
         });
@@ -91,7 +96,7 @@ public class TCPManager {
     }
 
     public void openClient(final String ipAddress, final int port) {
-
+        L.d("打开客户端");
         clientThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -111,6 +116,7 @@ public class TCPManager {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    L.d("客户端 = " + e.toString());
                 }
             }
         });
@@ -139,7 +145,7 @@ public class TCPManager {
                 EventBus.getDefault().post(new EventBusMessage("接收客户端消息成功 = " + str));
             }
         } catch (IOException e) {
-            L.d("接收客户端消息失败");
+            L.d("接收客户端消息失败 = " + e.toString());
         }
     }
 
@@ -161,7 +167,7 @@ public class TCPManager {
                 EventBus.getDefault().post(new EventBusMessage("接收服务端消息成功 = " + str));
             }
         } catch (IOException e) {
-            L.d("接收服务端消息失败");
+            L.d("接收服务端消息失败 = " + e.toString());
         }
     }
 
@@ -220,7 +226,7 @@ public class TCPManager {
         clientConnect = false;
         try {
             // 关闭clientSocket
-            if (clientSocket != null && clientSocket.isConnected()) {
+            if (clientSocket != null) {
                 clientSocket.shutdownInput();
                 clientSocket.shutdownOutput();
                 clientSocket.close();
@@ -253,5 +259,4 @@ public class TCPManager {
             serverSocket = null;
         }
     }
-
 }
