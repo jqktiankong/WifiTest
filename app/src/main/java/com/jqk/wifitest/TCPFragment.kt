@@ -102,7 +102,7 @@ class TCPFragment : Fragment() {
                                 }
 
 //                                val intent = Intent()
-//                                intent.setClass(context!!, WifiService().javaClass)
+//                                intent.setClass(context!!, Wifip2pService().javaClass)
 //                                if (isClient) {
 //                                    intent.putExtra("type", "client")
 //                                } else {
